@@ -1,0 +1,18 @@
+name: Test SSH Connection to Namecheap
+
+on:
+  workflow_dispatch:  # Allow manual runs
+
+jobs:
+  test-ssh:
+    runs-on: ubuntu-latest
+    echo ${{ secrets.DEVZYNER_SERVER }};
+
+    steps:
+    - name: Set up SSH agent and add private key
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.DEVZYNER_SERVER }}
+
+    - name: Test SSH Connection
+      run: ssh -p 21 -o StrictHostKeyChecking=no devzqtat@devzyner.com "echo 'SSH connection successful!'"
